@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Codenames</title>
+
+    <!-- socket io library -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- header font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- instructions font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Overpass:wght@0,900;1,200
+      display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- link to font awesome library -->
+    <link
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      rel="stylesheet"
+    />
+
+    <!-- link to my CSS -->
+    <link rel="stylesheet" type="text/css" href="codeNames.css" />
+
+    <!-- add bootstrap library -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.css"
+    />
+  </head>
+  <body>
+    <div class="col-11 col-lg-9 col-xl-8 mx-auto">
+      <div class="text-center mt-5 mb-4">
+        <h1 id="title" class="typewriter">Codenames</h1>
+      </div>
+
+      <hr class="mt-5" id="formTopRule" />
+
+      <form action="" class="mb-5" id="words-form">
+        <div class="row">
+          <div class="col-12 col-sm-8 col-md-5 my-5 text-center">
+            <h5 class="head">To create a new game:</h5>
+            <p class="instructions">
+              Enter three topics and a unique game identifier.
+            </p>
+            <h5 class="head">To join an existing game:</h5>
+            <p class="instructions">
+              Enter the unique identifier and click 'Load Game!'
+            </p>
+          </div>
+        </div>
+
+        <div class="input-group row mx-auto">
+          <input
+            class="form-control col-2 py-2"
+            id="topic1"
+            type="text"
+            placeholder="Topic 1"
+          />
+          <input
+            class="form-control col-2 mx-3 py-2"
+            id="topic2"
+            type="text"
+            placeholder="Topic 2"
+          />
+          <input
+            class="form-control col-2 py-2"
+            id="topic3"
+            type="text"
+            placeholder="Topic 3"
+          />
+        </div>
+
+        <div>
+          <div class="col-6 input-group mt-4 mb-5 mx-auto">
+            <input
+              class="form-control"
+              id="identifier"
+              type="text"
+              placeholder="Unique Identifier"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary pageBtns"
+                type="submit"
+                id="loadBtn"
+              >
+                Load Game!
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <h3 class="currentTeam text-center my-3"></h3>
+      <h4 class="text-center" style="display: none">Loading...</h4>
+
+      <div class="loadingWheel text-center hidden">
+        <i class="fas fa-spinner fa-spin fa-10x mt-5"></i>
+      </div>
+
+      <div class="col-11 col-lg-9 col-xl-8 mx-auto gameInfo">
+        <span class="mr-auto hidden" id="link"></span>
+        <span class="ml-auto hidden" id="timer">02:00</span>
+      </div>
+
+      <hr class="col-11 col-lg-9 col-xl-8 hidden" id="linkRule" />
+
+      <div
+        id="score"
+        class="col-11 col-lg-9 col-xl-8 mx-auto mb-3 mt-4 gameInfo"
+      >
+        <div class="tilesRmng mr-auto">
+          <span class="Blue-TeamColor" id="blueTilesRmng"></span>
+          <span class="Red-TeamColor" id="redTilesRmng"></span>
+        </div>
+        <div class="mx-auto">
+          <span id="notifyTurn"></span>
+        </div>
+        <span class="ml-auto hidden text-right" type="button" id="timerBtn"
+          >Start Turn</span
+        >
+      </div>
+
+      <div class="gameBoard">
+        <div class="row row0">
+          <!-- col divs to be made and filled in js -->
+        </div>
+        <div class="row row1">
+          <!-- col divs to be made and filled in js -->
+        </div>
+        <div class="row row2">
+          <!-- col divs to be made and filled in js -->
+        </div>
+        <div class="row row3">
+          <!-- col divs to be made and filled in js -->
+        </div>
+        <div class="row row4">
+          <!-- col divs to be made and filled in js -->
+        </div>
+        <div class="text-center winner hidden">
+          <h1 class="typewriter align-middle"></h1>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <button
+          class="btn btn-primary pageBtns"
+          style="display: none"
+          type="click"
+          id="restartBtn"
+        >
+          Make New Game!
+        </button>
+      </div>
+
+      <form action="" class="selectView-form text-center hidden mt-4">
+        <label class="radio-inline mr-4 player">
+          <input
+            class="mr-2"
+            type="radio"
+            name="view"
+            value="Player"
+            checked
+          />Player</label
+        >
+        <label class="radio-inline spymaster">
+          <input
+            class="mr-2"
+            type="radio"
+            name="view"
+            value="Spymaster"
+          />Spymaster</label
+        >
+      </form>
+      
+    </div>
+
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://unpkg.com/lodash"></script>
+    <script src="codeNamesUI.js"></script>
+    <script src="cnLogic.js"></script>
+    <script src="socket.js"></script>
+    <!-- <script src="https://unpkg.com/popper"></script>
+    <script src="https://unpkg.com/bootstrap"></script> -->
+  </body>
+</html>
