@@ -7,37 +7,50 @@ const PORT = process.env.PORT || 8000;
 
 // app setup
 let app = express();
-
-const server = app.listen(PORT, function () {
-  console.log(`listening on ${PORT}`);
-});
+var http = require("http").createServer(app);
 
 // static files
 app.use(express.static("public"));
 
 // socket setup
-let io = socket(server);
+let io = socket(http);
 
 io.on("connection", function (socket) {
-  console.log('made a new connection: ', socket.id);
-  
+  socket.on('requestData', function () {
+    io.sockets.emit('requestData');
+  });
 
-  // example server side from other apps //
+  socket.on('syncInitialData', function (data) {
+    io.sockets.emit('syncInitialData', data);
+  });
 
-  // socket.on('newGame', function (data) {
-  //   io.sockets.emit('newGame', data);
-  // });
+  socket.on("startGame", function (data) {
+    io.sockets.emit("startGame", data);
+  });
 
-  // socket.on('flipCard', function (data) {
-  //   io.sockets.emit('flipCard', data);
-  // });
+  socket.on("updateAfterGameBoardClick", function (data) {
+    // console.log("updateAfterGameBoardClick called", data);
+    io.sockets.emit("updateAfterGameBoardClick", data);
+  });
 
-  // socket.on('flipTimer', function (data) {
-  //   io.sockets.emit('flipTimer', data);
-  // });
+  socket.on("timerBtnClicked", function () {
+    io.sockets.emit("timerBtnClicked");
+  });
 
-  // socket.on('endGame', function (data) {
-  //   io.sockets.emit('endGame', data);
-  // });
+  socket.on("flipCard", function (data) {
+    io.sockets.emit("flipCard", data);
+  });
 
+  socket.on("endGame", function () {
+    io.sockets.emit("endGame");
+  });
+
+  socket.on("reloadSockets", function () {
+    io.sockets.emit("reloadSockets");
+  });
+
+});
+
+const server = http.listen(PORT, function () {
+  console.log(`listening on ${PORT}`);
 });

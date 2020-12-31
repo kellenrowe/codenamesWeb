@@ -2,34 +2,60 @@
 
 // make connection
 // const PORT = 'codenames.kellen-rowe.com';
-const PORT = 'localhost:8000';
-const socket = io.connect(`http://${PORT}`);
+const PORT = "localhost:8000";
+// const socket = io.connect(`http://${PORT}`);
+let socket = io();
+
+function loadInitialData() {
+  socket.emit('requestData');
+}
+loadInitialData();
+
+socket.on('requestData', function () {
+  socket.emit('syncInitialData', gameState);
+});
 
 
+socket.on("startGame", function (data) {
+  gameState = data;
+  displayShuffledTeams();
+  calculateScore();
+  displayTeamTurn();
+  $("#title").removeClass("typewriter");
+});
+
+socket.on("updateAfterGameBoardClick", function (data) {
+  gameState = data;
+  calculateScore();
+  displayTeamTurn();
+});
 
 
-/** example front end emits from other apps */
+timerBtn.on("click", function () {
+  socket.emit("timerBtnClicked");
+});
 
-// const flipTimerEvent = () => {
-//   socket.emit('flipTimer');
-// };
+socket.on("timerBtnClicked", function () {
+  handleTimer();
+});
 
-// const endGameEvent = () => {
-//   socket.emit('endGame');
-// };
+socket.on('flipCard', function(data) {
+  addClasses(data);
+});
+
+socket.on('endGame', function () {
+  endGame();
+});
+
+restartBtn.on("click", function () {
+  socket.emit("reloadSockets");
+});
+
+socket.on("reloadSockets", function () {
+  makeNewGame();
+});
 
 // socket.on('handleClicks', function(data) {
 //   handleClicks(data);
 // });
 
-// socket.on('handleTimer', function (data) {
-//   handleTimer();
-// });
-
-// socket.on('startTimer', function (data) {
-//   startTimer();
-// });
-
-// socket.on('endGame', function (data) {
-//   endGame();
-// });

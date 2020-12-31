@@ -23,37 +23,61 @@ function hidePageComponents() {
   components.forEach((c) => c.hide());
 }
 
+
+/** adds class based on information
+ *  recieved from server
+ */
+function addClasses(cardInfo) {
+  // $("#title").removeClass("typewriter");
+  let card = cardInfo.card;
+  let color = cardInfo.color;
+  $(`#${card}`).addClass(`${color}`);
+}
+
+
+/** removes class based on information
+ *  recieved from server
+ */
+function removeClasses() {
+  // $("#title").removeClass("typewriter");
+}
+
+
 /** switches current player and displays in dom */
 function switchCurrentTeam() {
   console.debug("switchCurrentTeam");
 
-  currentTeam === "Blue-Team"
-    ? (currentTeam = "Red-Team")
-    : (currentTeam = "Blue-Team");
-  displayTeamTurn();
+  gameState.currentTeam === "Blue-Team"
+    ? (gameState.currentTeam = "Red-Team")
+    : (gameState.currentTeam = "Blue-Team");
+
+  // displayTeamTurn();
   clearInterval(intervalId);
-  timer = false;
-  timerBtn.text("Start Turn");
+  // timer = false;
+  // timerBtn.text("Start Timer");
 }
+
 
 /** displays which team is going */
 function displayTeamTurn() {
   console.debug("displayTeamTurn");
 
   $("#notifyTurn")
-    .text(`${currentTeam}'s turn`)
-    .attr("class", `${currentTeam}Color`);
+    .text(`${gameState.currentTeam}'s turn`)
+    .attr("class", `${gameState.currentTeam}Color`);
 }
 
-/** calculates score and displays in DOM */
-function populateScore() {
-  console.debug("populateScore");
 
-  let rScore = 8 - redScore;
-  let bScore = 9 - blueScore;
+/** calculates score and displays in DOM */
+function calculateScore() {
+  console.debug("calculateScore");
+
+  let rScore = 8 - gameState.scoreboard.redScore;
+  let bScore = 9 - gameState.scoreboard.blueScore;
   $("#blueTilesRmng").text(`${bScore} - `);
   $("#redTilesRmng").text(`${rScore}`);
 }
+
 
 /** Wipe the current board, show the loading spinner,
  * and update the button used to fetch data.
@@ -65,9 +89,11 @@ function showLoadingView() {
   $(".loadingWheel").show();
 }
 
+
 /** Remove the loading spinner and shows gamebaord with all features */
 function hideLoadingView() {
   console.debug("hideLoadingView");
+
   hidePageComponents();
   $(".gameBoard").show("slow");
   restartBtn.show("slow");
@@ -76,10 +102,11 @@ function hideLoadingView() {
   $("#timer").show("slow");
   timerBtn.show("slow");
   $("#link")
-    .text(`Send this link to your friends: ${BASE_LINK}${identifier}`)
+    .text(`Invite friends: ${BASE_LINK}${gameState.identifier}`)
     .show("slow");
   $("#linkRule").show("slow");
 }
+
 
 /** recieves input from radio button to determine which view the user
  * sees. changes checked status and calls to makeViewFor player or spymaster
@@ -106,6 +133,7 @@ function determineView(evt) {
   }
 }
 
+
 /** converts board to view for spymaster */
 function makeViewForSpymaster(array) {
   console.debug("makeViewForSpymaster");
@@ -122,6 +150,7 @@ function makeViewForSpymaster(array) {
     }
   }
 }
+
 
 /** converts board back to player view */
 function makeViewForPlayer(array) {

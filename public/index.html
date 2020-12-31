@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Codenames</title>
 
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/Untitled-4.png"/>
+
     <!-- socket io library -->
     <script src="/socket.io/socket.io.js"></script>
 
@@ -16,12 +19,12 @@
     />
 
     <!-- instructions font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Overpass:wght@0,900;1,200
       display=swap"
       rel="stylesheet"
-    />
+    /> -->
 
     <!-- link to font awesome library -->
     <link
@@ -30,7 +33,7 @@
     />
 
     <!-- link to my CSS -->
-    <link rel="stylesheet" type="text/css" href="codeNames.css" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
 
     <!-- add bootstrap library -->
     <link
@@ -128,7 +131,7 @@
           <span id="notifyTurn"></span>
         </div>
         <span class="ml-auto hidden text-right" type="button" id="timerBtn"
-          >Start Turn</span
+          >Start Timer</span
         >
       </div>
 
@@ -183,13 +186,12 @@
           />Spymaster</label
         >
       </form>
-      
     </div>
 
     <script src="https://unpkg.com/jquery"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://unpkg.com/lodash"></script>
-    <script src="codeNamesUI.js"></script>
+    <script src="cnUI.js"></script>
     <script src="cnLogic.js"></script>
     <script src="socket.js"></script>
     <!-- <script src="https://unpkg.com/popper"></script>

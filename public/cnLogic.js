@@ -5,23 +5,29 @@ const BASE_API_URL = "http://api.datamuse.com/words?ml=";
 const HEIGHT = 5;
 const WIDTH = 5;
 const TURN_LENGTH = 120; // 2 minutes
-const BASE_LINK = "http://codenamesgame.com/"; // whatever url i get
+const BASE_LINK = "http://codenames.kellen-rowe.com/"; 
 
-const restartBtn = $("#restartBtn");
-const timerBtn = $("#timerBtn");
-const loadGameBtn = $("#words-form");
+let restartBtn = $("#restartBtn");
+let timerBtn = $("#timerBtn");
+let loadGameBtn = $("#words-form");
 
-let identifier;
-let redScore = 0;
-let blueScore = 0;
-let currentTeam;
 let timer = false;
 let intervalId;
 
 let topicsArray = [];
 let wordsArray = [];
 
-/** creates and starts turn timer */
+let gameState = {
+  boardData: [],
+  scoreboard: {
+    redScore: 0,
+    blueScore: 0,
+  },
+  currentTeam: "Blue-Team",
+}
+
+
+/** creates and starts turn / timer */
 function startTimer() {
   console.debug("startTimer");
 
@@ -44,6 +50,7 @@ function startTimer() {
   return intervalId;
 }
 
+
 /** on click: controls timer reset, and signifier */
 function handleTimer() {
   console.debug("handleTimer");
@@ -51,14 +58,15 @@ function handleTimer() {
   if (!timer) {
     intervalId = startTimer();
     timer = true;
-    timerBtn.text("End Turn");
+    timerBtn.text("Stop Timer");
   } else {
     clearInterval(intervalId);
     timer = false;
-    timerBtn.text("Start Turn");
     switchCurrentTeam();
+    timerBtn.text("Start Timer");
   }
 }
+
 
 /** returns array of words input by user */
 function getTopics() {
@@ -72,8 +80,10 @@ function getTopics() {
   return topicsArray;
 }
 
+
 /** makes get request for each word in topicsArray and returns array of
- * all words */
+ *  all words 
+ * */
 async function getWords(topicsArray) {
   console.debug("getWords");
   let words = [];
@@ -90,48 +100,61 @@ async function getWords(topicsArray) {
   return words;
 }
 
-/** creates HEIGHT * WIDTH # of divs with words and team assignments */
+
+/** creates HEIGHT * WIDTH # of board pieces with words and team assignments.
+ *  places board piece info into gameState.boardData array.
+ */
 function makesCells() {
   console.debug("fillTable");
   $("div .row").empty();
 
-  let cellsArray = [];
-  let cell;
   let red = 0;
   let blue = 0;
   let grey = 0;
 
   for (let i = 0; i < HEIGHT * WIDTH; i++) {
     if (red < 8) {
-      cell = $("<div>").attr("class", "cells align-middle text-center red");
+      gameState.boardData[i] = {
+        element: "div",
+        class: "cells red",
+        word: `${wordsArray[i]}`
+      }
       red++;
     } else if (blue < 9) {
-      cell = $("<div>").attr("class", "cells align-middle text-center blue");
+      gameState.boardData[i] = {
+        element: "div",
+        class: "cells blue",
+        word: `${wordsArray[i]}`
+      }
       blue++;
     } else if (grey < 7) {
-      cell = $("<div>").attr("class", "cells align-middle text-center grey");
+      gameState.boardData[i] = {
+        element: "div",
+        class: "cells grey",
+        word: `${wordsArray[i]}`
+      }
       grey++;
     } else {
-      cell = $("<div>").attr("class", "cells align-middle text-center black");
+      gameState.boardData[i] = {
+        element: "div",
+        class: "cells black",
+        word: `${wordsArray[i]}`
+      }
     }
-    cell.append(`${wordsArray[0]}`);
-    wordsArray.shift();
-    cellsArray.push(cell);
   }
-  return cellsArray;
 }
+
 
 /** Shuffle array items in-place and return shuffled array. */
 function shuffle(items) {
   console.debug("shuffle");
   for (let i = items.length - 1; i > 0; i--) {
-    // generate a random index between 0 and i
     let j = Math.floor(Math.random() * i);
-    // swap item at i <-> item at j
     [items[i], items[j]] = [items[j], items[i]];
   }
   return items;
 }
+
 
 /** increments score,
  * handles percieved flip of a cell by adding class,
@@ -139,60 +162,72 @@ function shuffle(items) {
  */
 function handleClicks(evt) {
   console.debug("handleClicks");
+  console.log('evt', evt.target.id)
 
-  if (currentTeam === "Blue-Team") {
+  if (gameState.currentTeam === "Blue-Team") {
     if ($(evt.target).hasClass("red")) {
-      $(evt.target).addClass("turn-red");
-      redScore++;
+      socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-red" });
+      gameState.scoreboard.redScore++;
+      socket.emit("timerBtnClicked");
       switchCurrentTeam();
     } else if ($(evt.target).hasClass("blue")) {
-      $(evt.target).addClass("turn-blue");
-      blueScore++;
-    }
-    if (blueScore === 9 || redScore === 8) {
-      endGame();
+      socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-blue" });
+      gameState.scoreboard.blueScore++;
     }
   } else {
     if ($(evt.target).hasClass("red")) {
-      $(evt.target).addClass("turn-red");
-      redScore++;
+      socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-red" });
+      gameState.scoreboard.redScore++;
     } else if ($(evt.target).hasClass("blue")) {
-      $(evt.target).addClass("turn-blue");
-      blueScore++;
+      socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-blue" });
+      gameState.scoreboard.blueScore++;
+      socket.emit("timerBtnClicked");
       switchCurrentTeam();
-    }
-    if (blueScore === 9 || redScore === 8) {
-      endGame();
     }
   }
   if ($(evt.target).hasClass("grey")) {
-    $(evt.target).addClass("turn-grey");
+    socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-grey" });
+    socket.emit("timerBtnClicked");
     switchCurrentTeam();
   }
   if ($(evt.target).hasClass("black")) {
-    $(evt.target).addClass("turn-black");
+    socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-black" });
+    socket.emit("timerBtnClicked");
     switchCurrentTeam();
-    endGame();
+    // endGame();
+    socket.emit("updateAfterGameBoardClick", gameState);
+    socket.emit("endGame")
+    return
   }
-  populateScore();
+  if (gameState.scoreboard.blueScore === 9
+    || gameState.scoreboard.redScore === 8) {
+    // endGame();
+    socket.emit("endGame")
+    return
+  }
+  socket.emit("updateAfterGameBoardClick", gameState);
   $(".selectView-form").off();
 }
 
-/** Announces the winner, removes event listener from gameboard, resets gameboard info */
+
+/** Announces the winner, 
+ *  reveals teams for each cell,
+ *  removes event listener from gameboard
+ * */
 function endGame() {
-  $(".winner h1").text(`${currentTeam} wins!!`);
-  if (currentTeam === "Blue-Team") {
+  $(".winner h1").text(`${gameState.currentTeam} wins!!`);
+  if (gameState.currentTeam === "Blue-Team") {
     $(".winner").addClass("turn-blue").show("slow");
   } else {
     $(".winner").addClass("turn-red").show("slow");
   }
 
+  let cellsArray = $("div .cells").toArray();
+  setTimeout(makeViewForSpymaster, 2000, cellsArray);
+
   $(".gameBoard").off();
   $(".currentTeam").empty();
-  redScore = 0;
-  blueScore = 0;
-  topicsArray = [];
-  wordsArray = [];
+  $(".selectView-form").hide();
 }
 
 /** reloads page and lets players input new words for a new game */
@@ -201,23 +236,26 @@ function makeNewGame() {
   location.reload();
 }
 
+
 /** takes in array of cells
- * calls shuffle to randomize team placements
- * displays cells in DOM
+ *  calls shuffle to randomize team placements
+ *  displays cells in DOM
  */
-function displayShuffledTeams(cellsArray) {
+function displayShuffledTeams() {
   console.debug("displayShuffledTeams");
-  cellsArray = shuffle(cellsArray);
+  
   for (let i = 0; i < HEIGHT; i++) {
     for (let j = 0; j < WIDTH; j++) {
-      let cell = cellsArray[0];
-      $(`.row${i}`).append(cell);
-      cell.attr("id", `${i}-${j}`);
-      cellsArray.shift();
+      let cell = gameState.boardData[0];
+      $(`.row${i}`)
+        .append(`<div id=${i}-${j}>${cell.word}</div>`);
+      $(`#${i}-${j}`).attr("class", `${cell.class}`)
+      gameState.boardData.shift();
     }
   }
   hideLoadingView();
 }
+
 
 /** makes calls to:
  * fetch topics and words
@@ -227,16 +265,18 @@ function displayShuffledTeams(cellsArray) {
  */
 async function setupGameBoard() {
   console.debug("setupGameBoard");
-  $("#title").removeClass("typewriter");
-
+  
   topicsArray = await getTopics();
   wordsArray = await getWords(topicsArray);
   wordsArray = shuffle(wordsArray);
   wordsArray.splice(HEIGHT * WIDTH);
+  
+  makesCells();
+  gameState.boardData = shuffle(gameState.boardData)
 
-  let cellsArray = makesCells();
-  displayShuffledTeams(cellsArray);
+  socket.emit("startGame", gameState);
 }
+
 
 /** resets game variables and event listener
  * shows the loading view
@@ -246,10 +286,7 @@ function startGame(evt) {
   console.debug("startGame");
   evt.preventDefault();
 
-  currentTeam = "Blue-Team";
-  identifier = $("#identifier").val();
-  populateScore();
-  displayTeamTurn();
+  gameState["identifier"] = $("#identifier").val();
   showLoadingView();
   setTimeout(setupGameBoard, 2000);
 
@@ -258,7 +295,6 @@ function startGame(evt) {
 }
 
 // event listeners
-
 loadGameBtn.on("submit", startGame);
-restartBtn.on("click", makeNewGame);
-timerBtn.on("click", handleTimer);
+// restartBtn.on("click", makeNewGame);
+// timerBtn.on("click", handleTimer);
