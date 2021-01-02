@@ -1,6 +1,6 @@
 "use strict";
 
-const BASE_API_URL = "http://api.datamuse.com/words?ml=";
+const BASE_API_URL = "https://api.datamuse.com/words?ml=";
 
 const HEIGHT = 5;
 const WIDTH = 5;
