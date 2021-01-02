@@ -5,7 +5,7 @@ const BASE_API_URL = "http://api.datamuse.com/words?ml=";
 const HEIGHT = 5;
 const WIDTH = 5;
 const TURN_LENGTH = 120; // 2 minutes
-const BASE_LINK = "http://codenames.kellen-rowe.com/"; 
+const BASE_LINK = "https://my-codenames.herokuapp.com/"; 
 
 let restartBtn = $("#restartBtn");
 let timerBtn = $("#timerBtn");
