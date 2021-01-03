@@ -28,8 +28,11 @@ io.on("connection", function (socket) {
     io.sockets.emit("startGame", data);
   });
 
+  socket.on("showLoadingView", function () {
+    io.sockets.emit("showLoadingView");
+  });
+
   socket.on("updateAfterGameBoardClick", function (data) {
-    // console.log("updateAfterGameBoardClick called", data);
     io.sockets.emit("updateAfterGameBoardClick", data);
   });
 

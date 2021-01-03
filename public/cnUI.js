@@ -79,9 +79,7 @@ function calculateScore() {
 }
 
 
-/** Wipe the current board, show the loading spinner,
- * and update the button used to fetch data.
- */
+/** hide page components & show the loading spinner */
 function showLoadingView() {
   console.debug("showLoadingView");
   hidePageComponents();

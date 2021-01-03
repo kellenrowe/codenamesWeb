@@ -2,7 +2,8 @@
 
 // make connection
 // const PORT = 'codenames.kellen-rowe.com';
-const PORT = "https://my-codenames.herokuapp.com/";
+const PORT = "https://localhost:8000";
+// const PORT = "https://my-codenames.herokuapp.com/";
 // const socket = io.connect(`http://${PORT}`);
 let socket = io();
 
@@ -22,6 +23,10 @@ socket.on("startGame", function (data) {
   calculateScore();
   displayTeamTurn();
   $("#title").removeClass("typewriter");
+});
+
+socket.on("showLoadingView", function () {
+  showLoadingView();
 });
 
 socket.on("updateAfterGameBoardClick", function (data) {

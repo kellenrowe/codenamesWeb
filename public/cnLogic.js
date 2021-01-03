@@ -196,13 +196,13 @@ function handleClicks(evt) {
     switchCurrentTeam();
     // endGame();
     socket.emit("updateAfterGameBoardClick", gameState);
-    socket.emit("endGame")
+    socket.emit("endGame");
     return
   }
   if (gameState.scoreboard.blueScore === 9
     || gameState.scoreboard.redScore === 8) {
     // endGame();
-    socket.emit("endGame")
+    socket.emit("endGame");
     return
   }
   socket.emit("updateAfterGameBoardClick", gameState);
@@ -287,14 +287,15 @@ function startGame(evt) {
   evt.preventDefault();
 
   gameState["identifier"] = $("#identifier").val();
-  showLoadingView();
-  setTimeout(setupGameBoard, 2000);
+  socket.emit("showLoadingView");
 
+  setTimeout(setupGameBoard, 2000);
   $(".gameBoard").on("click", ".cells", handleClicks);
   $(".selectView-form").on("click", "label", determineView);
 }
 
+
 // event listeners
 loadGameBtn.on("submit", startGame);
-// restartBtn.on("click", makeNewGame);
-// timerBtn.on("click", handleTimer);
+// restartBtn.on("click", makeNewGame); ******* socket.js
+// timerBtn.on("click", handleTimer); ******* socket.js
