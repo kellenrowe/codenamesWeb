@@ -45,10 +45,7 @@ function switchCurrentTeam() {
     ? (gameState.currentTeam = "Red-Team")
     : (gameState.currentTeam = "Blue-Team");
 
-  // displayTeamTurn();
   clearInterval(intervalId);
-  // timer = false;
-  // timerBtn.text("Start Timer");
   socket.emit("updateAfterGameBoardClick", gameState);
 }
 
@@ -98,7 +95,6 @@ function hideLoadingView() {
     .text(`Invite friends: ${BASE_LINK}`)
     .show("slow");
   $("#linkRule").show("slow");
-  // ${gameState.identifier} *** will go after ${BASE_LINK}
 }
 
 

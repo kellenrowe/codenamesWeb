@@ -5,7 +5,7 @@ const BASE_API_URL = "https://api.datamuse.com/words?ml=";
 const HEIGHT = 5;
 const WIDTH = 5;
 const TURN_LENGTH = 120; // 2 minutes
-const BASE_LINK = "https://my-codenames.herokuapp.com/"; 
+const BASE_LINK = "http://codenames.kellen-rowe.com"; 
 
 let restartBtn = $("#restartBtn");
 let timerBtn = $("#timerBtn");
@@ -175,7 +175,6 @@ function changeCase(wordsArray) {
  */
 function handleClicks(evt) {
   console.debug("handleClicks");
-  // console.log('evt', evt.target)
   if (!timer) {
     alert("Please click 'Start Timer' before making selection.");
     return;
@@ -206,7 +205,6 @@ function handleClicks(evt) {
       socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-blue" });
       gameState.scoreboard.blueScore++;
       socket.emit("timerBtnClicked");
-      // switchCurrentTeam();
     }
     if (gameState.scoreboard.blueScore === 9
       || gameState.scoreboard.redScore === 8) {
@@ -216,13 +214,10 @@ function handleClicks(evt) {
   if ($(evt.target).hasClass("grey")) {
     socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-grey" });
     socket.emit("timerBtnClicked");
-    // switchCurrentTeam();
   }
   if ($(evt.target).hasClass("black")) {
     socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-black" });
     socket.emit("timerBtnClicked");
-    // switchCurrentTeam();
-    // socket.emit("updateAfterGameBoardClick", gameState);
     socket.emit("endGame");
     return
   }
@@ -236,7 +231,6 @@ function handleClicks(evt) {
  *  removes event listener from gameboard
  * */
 function endGame() {
-    // socket.emit("updateAfterGameBoardClick", gameState);
     $(".winner h1").text(`${gameState.currentTeam} wins!!`);
     if (gameState.currentTeam === "Blue-Team") {
       $(".winner").addClass("turn-blue").show("slow");
@@ -329,12 +323,8 @@ function startGame(evt) {
   console.debug("startGame");
   evt.preventDefault();
 
-  // gameState["identifier"] = $("#identifier").val(); ******* not in use
   socket.emit("showLoadingView");
-
   setTimeout(setupGameBoard, 2000);
-  // $(".gameBoard").on("click", ".cells", handleClicks);
-  // $(".selectView-form").on("click", "label", determineView);
 }
 
 
@@ -346,9 +336,7 @@ function startAutoGenGame(evt) {
   console.debug("startAutoGenGame");
   evt.preventDefault();
 
-  // gameState["identifier"] = $("#identifier").val(); ******* not in use
   socket.emit("showLoadingView");
-
   setTimeout(autoGameBoard, 2000);
 }
 

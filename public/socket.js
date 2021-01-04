@@ -1,8 +1,8 @@
 "use strict";
 
 // make connection
-// const PORT = 'codenames.kellen-rowe.com';
-const PORT = "https://localhost:8000";
+const PORT = 'codenames.kellen-rowe.com';
+// const PORT = "https://localhost:8000";
 // const PORT = "https://my-codenames.herokuapp.com/";
 // const socket = io.connect(`http://${PORT}`);
 let socket = io();
@@ -64,12 +64,4 @@ restartBtn.on("click", function () {
 socket.on("reloadSockets", function () {
   makeNewGame();
 });
-
-// $(".gameBoard").on("click", ".cells", function () {
-//   socket.emit("handleClicks");
-// });
-
-// socket.on('handleClicks', function(data) {
-//   handleClicks(data);
-// });
 
