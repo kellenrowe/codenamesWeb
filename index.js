@@ -36,6 +36,10 @@ io.on("connection", function (socket) {
     io.sockets.emit("updateAfterGameBoardClick", data);
   });
 
+  socket.on("turnViewSelectOff", function () {
+    io.sockets.emit("turnViewSelectOff");
+  });
+
   socket.on("timerBtnClicked", function () {
     io.sockets.emit("timerBtnClicked");
   });

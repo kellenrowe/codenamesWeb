@@ -40,12 +40,17 @@ timerBtn.on("click", function () {
   socket.emit("timerBtnClicked");
 });
 
+socket.on("turnViewSelectOff", function () {
+  $(".selectView-form").off();
+});
+
 socket.on("timerBtnClicked", function () {
   handleTimer();
+  displayTeamTurn();
 });
 
 socket.on('flipCard', function(data) {
-  addClasses(data);
+  handleClasses(data);
 });
 
 socket.on('endGame', function () {
@@ -59,6 +64,10 @@ restartBtn.on("click", function () {
 socket.on("reloadSockets", function () {
   makeNewGame();
 });
+
+// $(".gameBoard").on("click", ".cells", function () {
+//   socket.emit("handleClicks");
+// });
 
 // socket.on('handleClicks', function(data) {
 //   handleClicks(data);

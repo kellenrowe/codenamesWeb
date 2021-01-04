@@ -54,12 +54,23 @@
           <div class="col-12 col-sm-8 col-md-5 my-5 text-center">
             <h5 class="head">To create a new game:</h5>
             <p class="instructions">
-              Enter three topics and a unique game identifier.
+              Enter three topics and click 'Load Game!'
             </p>
-            <h5 class="head">To join an existing game:</h5>
+            <!-- <h5 class="head">To join an existing game:</h5>
             <p class="instructions">
               Enter the unique identifier and click 'Load Game!'
+            </p> -->
+            <h5 class="head">or:</h5>
+            <p class="instructions">
+              Click 'Auto Generate'
             </p>
+            <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="autoGenBtn"
+              >
+                Auto Generate
+              </button>
           </div>
         </div>
 
@@ -86,21 +97,21 @@
 
         <div>
           <div class="col-6 input-group mt-4 mb-5 mx-auto">
-            <input
+            <!-- <input
               class="form-control"
               id="identifier"
               type="text"
               placeholder="Unique Identifier"
-            />
-            <div class="input-group-append">
+            /> -->
+            <!-- <div class="input-group-append"> -->
               <button
-                class="btn btn-outline-secondary pageBtns"
+                class="btn btn-block pageBtns"
                 type="submit"
                 id="loadBtn"
               >
                 Load Game!
               </button>
-            </div>
+            <!-- </div> -->
           </div>
         </div>
       </form>

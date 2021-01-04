@@ -24,22 +24,16 @@ function hidePageComponents() {
 }
 
 
-/** adds class based on information
- *  recieved from server
+/** adds / removes class based on information
+ *  recieved from server after click
  */
-function addClasses(cardInfo) {
+function handleClasses(cardInfo) {
   // $("#title").removeClass("typewriter");
   let card = cardInfo.card;
   let color = cardInfo.color;
   $(`#${card}`).addClass(`${color}`);
-}
+  $(`#${card}`).removeClass(`flip`);
 
-
-/** removes class based on information
- *  recieved from server
- */
-function removeClasses() {
-  // $("#title").removeClass("typewriter");
 }
 
 
@@ -55,6 +49,7 @@ function switchCurrentTeam() {
   clearInterval(intervalId);
   // timer = false;
   // timerBtn.text("Start Timer");
+  socket.emit("updateAfterGameBoardClick", gameState);
 }
 
 
@@ -100,9 +95,10 @@ function hideLoadingView() {
   $("#timer").show("slow");
   timerBtn.show("slow");
   $("#link")
-    .text(`Invite friends: ${BASE_LINK}${gameState.identifier}`)
+    .text(`Invite friends: ${BASE_LINK}`)
     .show("slow");
   $("#linkRule").show("slow");
+  // ${gameState.identifier} *** will go after ${BASE_LINK}
 }
 
 
