@@ -89,13 +89,6 @@ body {
   width: 85px;
 }
 
-.Blue-TeamColor {
-  color: #192BC2;
-}
-
-.Red-TeamColor {
-  color: #A4243B;
-}
 
 .cells {
   display: flex;
@@ -113,8 +106,25 @@ body {
   appearance: none;
 }
 
+.Blue-TeamColor, .spymaster-blue{
+  color: #192BC2;
+}
+
+.Red-TeamColor, .spymaster-red {
+  color: #A4243B;
+}
+
+.spymaster-grey{
+  color: grey;
+}
+
+.spymaster-black {
+  color: black;
+}
+
 .cells:hover {
   cursor: pointer;
+  -webkit-transform:scale(1.03);
 }
 
 .turn-red {

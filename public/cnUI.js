@@ -8,11 +8,11 @@ function hidePageComponents() {
   console.debug("hidePageComponents");
   const components = [
     loadGameBtn,
-    $(".gameBoard"),
+    gameBoard,
     $("h4"),
     restartBtn,
     $(".loadingWheel"),
-    $(".selectView-form"),
+    selectView,
     $("#score"),
     $("#link"),
     $("#timer"),
@@ -85,9 +85,9 @@ function hideLoadingView() {
   console.debug("hideLoadingView");
 
   hidePageComponents();
-  $(".gameBoard").show("slow");
+  gameBoard.show("slow");
   restartBtn.show("slow");
-  $(".selectView-form").show("slow");
+  selectView.show("slow");
   $("#score").show("slow");
   $("#timer").show("slow");
   timerBtn.show("slow");
@@ -101,52 +101,55 @@ function hideLoadingView() {
 /** recieves input from radio button to determine which view the user
  * sees. changes checked status and calls to makeViewFor player or spymaster
  */
-function determineView(evt) {
-  console.debug("determineView");
-  evt.preventDefault();
+// function determineView(evt) {
+//   console.debug("determineView");
+//   evt.preventDefault();
 
-  if ($(evt.target).hasClass("spymaster")) {
-    $("input:radio[name=view]")[0].checked = false;
-    $("input:radio[name=view]")[1].checked = true;
-  } else {
-    $("input:radio[name=view]")[1].checked = false;
-    $("input:radio[name=view]")[0].checked = true;
-  }
+//   if ($(evt.target).hasClass("spymaster")) {
+//     $("input:radio[name=p_view]")[0].checked = false;
+//     $("input:radio[name=s_view]")[1].checked = true;
+//   } else {
+//     $("input:radio[name=p_view]")[1].checked = false;
+//     $("input:radio[name=s_view]")[0].checked = true;
+//   }
 
-  let view = $("input[name=view]:checked").val();
-  let cellsArray = $("div .cells").toArray();
+//   let view = $("input[name=view]:checked").val();
+//   let cellsArray = $("div .cells").toArray();
 
-  if (view === "Spymaster") {
-    makeViewForSpymaster(cellsArray);
-  } else {
-    makeViewForPlayer(cellsArray);
-  }
-}
+//   if (view === "Spymaster") {
+//     makeViewForSpymaster(cellsArray);
+//   } else {
+//     makeViewForPlayer(cellsArray);
+//   }
+// }
 
 
 /** converts board to view for spymaster */
-function makeViewForSpymaster(array) {
+function makeViewForSpymaster() {
   console.debug("makeViewForSpymaster");
+  let cellsArray = $("div .cells").toArray(); 
 
-  for (let i = 0; i < array.length; i++) {
-    if ($(array[i]).hasClass("red")) {
-      $(array[i]).addClass("turn-red");
-    } else if ($(array[i]).hasClass("blue")) {
-      $(array[i]).addClass("turn-blue");
-    } else if ($(array[i]).hasClass("grey")) {
-      $(array[i]).addClass("turn-grey");
+  for (let i = 0; i < cellsArray.length; i++) {
+    if ($(cellsArray[i]).hasClass("red")) {
+      $(cellsArray[i]).addClass("spymaster-red");
+    } else if ($(cellsArray[i]).hasClass("blue")) {
+      $(cellsArray[i]).addClass("spymaster-blue");
+    } else if ($(cellsArray[i]).hasClass("grey")) {
+      $(cellsArray[i]).addClass("spymaster-grey");
     } else {
-      $(array[i]).addClass("turn-black");
+      $(cellsArray[i]).addClass("spymaster-black");
     }
   }
+  gameBoard.off();
+  selectView.hide();
 }
 
 
 /** converts board back to player view */
-function makeViewForPlayer(array) {
-  console.debug("makeViewForPlayer");
+// function makeViewForPlayer(array) {
+//   console.debug("makeViewForPlayer");
 
-  for (let i = 0; i < array.length; i++) {
-    $(array[i]).removeClass("turn-red turn-blue turn-grey turn-black");
-  }
-}
+//   for (let i = 0; i < array.length; i++) {
+//     $(array[i]).removeClass("turn-red turn-blue turn-grey turn-black");
+//   }
+// }

@@ -12,7 +12,7 @@ let timerBtn = $("#timerBtn");
 let loadGameBtn = $("#words-form");
 let autoGenBtn = $("#autoGenBtn");
 let gameBoard = $(".gameBoard");
-let selectView = $(".selectView-form");
+let selectView = $("#spyView");
 
 let timer = false;
 let intervalId;
@@ -61,12 +61,12 @@ function handleTimer() {
   if (!timer) {
     intervalId = startTimer();
     timer = true;
-    timerBtn.text("Stop Timer");
+    timerBtn.text("End Turn");
   } else {
     clearInterval(intervalId);
     timer = false;
     switchCurrentTeam();
-    timerBtn.text("Start Timer");
+    timerBtn.text("Start Turn");
   }
 }
 
@@ -176,7 +176,7 @@ function changeCase(wordsArray) {
 function handleClicks(evt) {
   console.debug("handleClicks");
   if (!timer) {
-    alert("Please click 'Start Timer' before making selection.");
+    alert("Please click 'Start Turn' before making selection.");
     return;
   }
 
@@ -221,6 +221,7 @@ function handleClicks(evt) {
     socket.emit("endGame");
     return
   }
+  $(evt.target).removeClass("canFlip");
   socket.emit("updateAfterGameBoardClick", gameState);
   socket.emit("turnViewSelectOff");
 }
@@ -241,9 +242,9 @@ function endGame() {
     let cellsArray = $("div .cells").toArray();
     setTimeout(makeViewForSpymaster, 2000, cellsArray);
     
-    $(".gameBoard").off();
+    gameBoard.off();
     $(".currentTeam").empty();
-    $(".selectView-form").hide();
+    selectView.hide();
 }
 
 /** reloads page and lets players input new words for a new game */
@@ -345,7 +346,7 @@ function startAutoGenGame(evt) {
 loadGameBtn.on("submit", startGame);
 autoGenBtn.on("click", startAutoGenGame);
 gameBoard.on("click", ".cells", handleClicks);
-selectView.on("click", "label", determineView);
+selectView.on("click", makeViewForSpymaster);
 // restartBtn.on("click", makeNewGame); ******* socket.js
 // timerBtn.on("click", handleTimer); ******* socket.js
 

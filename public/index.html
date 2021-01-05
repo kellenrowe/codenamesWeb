@@ -51,26 +51,27 @@
 
       <form action="" class="mb-5" id="words-form">
         <div class="row">
-          <div class="col-12 col-sm-8 col-md-5 my-5 text-center">
+          <div class="col-12 col-sm-8 col-md-5 mt-5 mb-2 text-center">
             <h5 class="head">To create a new game:</h5>
-            <p class="instructions">
-              Enter three topics and click 'Load Game!'
-            </p>
-            <!-- <h5 class="head">To join an existing game:</h5>
-            <p class="instructions">
-              Enter the unique identifier and click 'Load Game!'
-            </p> -->
-            <h5 class="head">or:</h5>
             <p class="instructions">
               Click 'Auto Generate'
             </p>
             <button
-                class="btn btn-outline-secondary"
+                class="btn pageBtns"
                 type="button"
                 id="autoGenBtn"
               >
                 Auto Generate
               </button>
+              <!-- <h5 class="head">To join an existing game:</h5>
+                <p class="instructions">
+                  Enter the unique identifier and click 'Load Game!'
+                </p> -->
+                <br><br><br>
+                <h5 class="head">or:</h5>
+                <p class="instructions">
+                  Enter three topics and click 'Load Game!'
+                </p>
           </div>
         </div>
 
@@ -105,7 +106,7 @@
             /> -->
             <!-- <div class="input-group-append"> -->
               <button
-                class="btn btn-block pageBtns"
+                class="btn btn-outline-dark mx-auto"
                 type="submit"
                 id="loadBtn"
               >
@@ -124,7 +125,12 @@
       </div>
 
       <div class="col-11 col-lg-9 col-xl-8 mx-auto gameInfo">
-        <span class="mr-auto hidden" id="link"></span>
+        <!-- <span class="mr-auto hidden" id="link"></span> -->
+        <button 
+          style="display: none"
+          id="spyView" 
+          class="btn btn-outline-dark btn-sm">I'm Spymaster
+        </button>
         <span class="ml-auto hidden" id="timer">02:00</span>
       </div>
 
@@ -132,8 +138,7 @@
 
       <div
         id="score"
-        class="col-11 col-lg-9 col-xl-8 mx-auto mb-3 mt-4 gameInfo"
-      >
+        class="col-11 col-lg-9 col-xl-8 mx-auto mb-3 mt-4 gameInfo">
         <div class="tilesRmng mr-auto">
           <span class="Blue-TeamColor" id="blueTilesRmng"></span>
           <span class="Red-TeamColor" id="redTilesRmng"></span>
@@ -142,7 +147,7 @@
           <span id="notifyTurn"></span>
         </div>
         <span class="ml-auto hidden text-right" type="button" id="timerBtn"
-          >Start Timer</span
+          >Start Turn</span
         >
       </div>
 
@@ -178,12 +183,12 @@
         </button>
       </div>
 
-      <form action="" class="selectView-form text-center hidden mt-4">
+      <!-- <form action="" class="selectView-form text-center hidden mt-4">
         <label class="radio-inline mr-4 player">
           <input
             class="mr-2"
             type="radio"
-            name="view"
+            name="p_view"
             value="Player"
             checked
           />Player</label
@@ -192,11 +197,11 @@
           <input
             class="mr-2"
             type="radio"
-            name="view"
+            name="s_view"
             value="Spymaster"
           />Spymaster</label
         >
-      </form>
+      </form> -->
     </div>
 
     <script src="https://unpkg.com/jquery"></script>
