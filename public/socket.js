@@ -41,7 +41,7 @@ timerBtn.on("click", function () {
 });
 
 socket.on("turnViewSelectOff", function () {
-  $(".selectView-form").off();
+  selectView.off();
 });
 
 socket.on("timerBtnClicked", function () {

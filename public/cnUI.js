@@ -98,32 +98,6 @@ function hideLoadingView() {
 }
 
 
-/** recieves input from radio button to determine which view the user
- * sees. changes checked status and calls to makeViewFor player or spymaster
- */
-// function determineView(evt) {
-//   console.debug("determineView");
-//   evt.preventDefault();
-
-//   if ($(evt.target).hasClass("spymaster")) {
-//     $("input:radio[name=p_view]")[0].checked = false;
-//     $("input:radio[name=s_view]")[1].checked = true;
-//   } else {
-//     $("input:radio[name=p_view]")[1].checked = false;
-//     $("input:radio[name=s_view]")[0].checked = true;
-//   }
-
-//   let view = $("input[name=view]:checked").val();
-//   let cellsArray = $("div .cells").toArray();
-
-//   if (view === "Spymaster") {
-//     makeViewForSpymaster(cellsArray);
-//   } else {
-//     makeViewForPlayer(cellsArray);
-//   }
-// }
-
-
 /** converts board to view for spymaster */
 function makeViewForSpymaster() {
   console.debug("makeViewForSpymaster");
@@ -144,12 +118,3 @@ function makeViewForSpymaster() {
   selectView.hide();
 }
 
-
-/** converts board back to player view */
-// function makeViewForPlayer(array) {
-//   console.debug("makeViewForPlayer");
-
-//   for (let i = 0; i < array.length; i++) {
-//     $(array[i]).removeClass("turn-red turn-blue turn-grey turn-black");
-//   }
-// }
