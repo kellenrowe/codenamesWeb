@@ -1,11 +1,11 @@
 "use strict";
 
+const BASE_LINK = "http://codenames.kellen-rowe.com"; 
 const BASE_API_URL = "https://api.datamuse.com/words?ml=";
 
 const HEIGHT = 5;
 const WIDTH = 5;
 const TURN_LENGTH = 120; // 2 minutes
-const BASE_LINK = "http://codenames.kellen-rowe.com"; 
 
 let restartBtn = $("#restartBtn");
 let timerBtn = $("#timerBtn");
@@ -260,7 +260,7 @@ function makeNewGame() {
  */
 function displayShuffledTeams() {
   console.debug("displayShuffledTeams");
-  
+
   for (let i = 0; i < HEIGHT; i++) {
     for (let j = 0; j < WIDTH; j++) {
       let cell = gameState.boardData[0];

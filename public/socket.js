@@ -1,10 +1,12 @@
 "use strict";
 
-// make connection
-const PORT = 'codenames.kellen-rowe.com';
+// const PORT = 'codenames.kellen-rowe.com';
+
 // const PORT = "https://localhost:8000";
-// const PORT = "https://my-codenames.herokuapp.com/";
+const PORT = "https://my-codenames.herokuapp.com/";
+
 // const socket = io.connect(`http://${PORT}`);
+
 let socket = io();
 
 function loadInitialData() {
@@ -16,9 +18,13 @@ socket.on('requestData', function () {
   socket.emit('syncInitialData', gameState);
 });
 
-
+// socket.on('syncInitialData', function (data) {
+// });
+    
+    
 socket.on("startGame", function (data) {
   gameState = data;
+  
   displayShuffledTeams();
   calculateScore();
   displayTeamTurn();
