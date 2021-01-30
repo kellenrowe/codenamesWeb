@@ -1,6 +1,5 @@
 "use strict";
 
-const BASE_LINK = "http://codenames.kellen-rowe.com"; 
 const BASE_API_URL = "https://api.datamuse.com/words?ml=";
 
 const HEIGHT = 5;
@@ -222,6 +221,7 @@ function handleClicks(evt) {
     return
   }
   $(evt.target).removeClass("canFlip");
+  
   socket.emit("updateAfterGameBoardClick", gameState);
   socket.emit("turnViewSelectOff");
 }

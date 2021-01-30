@@ -18,13 +18,9 @@ socket.on('requestData', function () {
   socket.emit('syncInitialData', gameState);
 });
 
-// socket.on('syncInitialData', function (data) {
-// });
-    
     
 socket.on("startGame", function (data) {
-  gameState = data;
-  
+  gameState = { ...data };
   displayShuffledTeams();
   calculateScore();
   displayTeamTurn();
@@ -36,7 +32,8 @@ socket.on("showLoadingView", function () {
 });
 
 socket.on("updateAfterGameBoardClick", function (data) {
-  gameState = data;
+  gameState = { ...data };
+  console.log('gameState.scoreboard = ', gameState.scoreboard)
   calculateScore();
   displayTeamTurn();
 });

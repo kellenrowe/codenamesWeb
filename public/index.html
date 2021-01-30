@@ -6,7 +6,7 @@
     <title>Codenames</title>
 
     <!-- favicon -->
-    <link rel="icon" type="image/png" href="/Untitled-4.png"/>
+    <link rel="icon" type="image/png" href="/Untitled-4.png" />
 
     <!-- socket io library -->
     <script src="/socket.io/socket.io.js"></script>
@@ -53,25 +53,15 @@
         <div class="row">
           <div class="col-12 col-sm-8 col-md-5 mt-5 mb-2 text-center">
             <h5 class="head">To create a new game:</h5>
+            <p class="instructions">Click 'Auto Generate'</p>
+            <button class="btn pageBtns" type="button" id="autoGenBtn">
+              Auto Generate
+            </button>
+            <br /><br /><br />
+            <h5 class="head">or:</h5>
             <p class="instructions">
-              Click 'Auto Generate'
+              Enter three topics and click 'Load Game!'
             </p>
-            <button
-                class="btn pageBtns"
-                type="button"
-                id="autoGenBtn"
-              >
-                Auto Generate
-              </button>
-              <!-- <h5 class="head">To join an existing game:</h5>
-                <p class="instructions">
-                  Enter the unique identifier and click 'Load Game!'
-                </p> -->
-                <br><br><br>
-                <h5 class="head">or:</h5>
-                <p class="instructions">
-                  Enter three topics and click 'Load Game!'
-                </p>
           </div>
         </div>
 
@@ -98,21 +88,13 @@
 
         <div>
           <div class="col-6 input-group mt-4 mb-5 mx-auto">
-            <!-- <input
-              class="form-control"
-              id="identifier"
-              type="text"
-              placeholder="Unique Identifier"
-            /> -->
-            <!-- <div class="input-group-append"> -->
-              <button
-                class="btn btn-outline-dark mx-auto"
-                type="submit"
-                id="loadBtn"
-              >
-                Load Game!
-              </button>
-            <!-- </div> -->
+            <button
+              class="btn btn-outline-dark mx-auto"
+              type="submit"
+              id="loadBtn"
+            >
+              Load Game!
+            </button>
           </div>
         </div>
       </form>
@@ -125,11 +107,12 @@
       </div>
 
       <div class="col-11 col-lg-9 col-xl-8 mx-auto gameInfo">
-        <!-- <span class="mr-auto hidden" id="link"></span> -->
-        <button 
+        <button
           style="display: none"
-          id="spyView" 
-          class="btn btn-outline-dark btn-sm">I'm Spymaster
+          id="spyView"
+          class="btn btn-outline-dark btn-sm"
+        >
+          I'm Spymaster
         </button>
         <span class="ml-auto hidden" id="timer">02:00</span>
       </div>
@@ -138,7 +121,8 @@
 
       <div
         id="score"
-        class="col-11 col-lg-9 col-xl-8 mx-auto mb-3 mt-4 gameInfo">
+        class="col-11 col-lg-9 col-xl-8 mx-auto mb-3 mt-4 gameInfo"
+      >
         <div class="tilesRmng mr-auto">
           <span class="Blue-TeamColor" id="blueTilesRmng"></span>
           <span class="Red-TeamColor" id="redTilesRmng"></span>
@@ -182,26 +166,6 @@
           Make New Game!
         </button>
       </div>
-
-      <!-- <form action="" class="selectView-form text-center hidden mt-4">
-        <label class="radio-inline mr-4 player">
-          <input
-            class="mr-2"
-            type="radio"
-            name="p_view"
-            value="Player"
-            checked
-          />Player</label
-        >
-        <label class="radio-inline spymaster">
-          <input
-            class="mr-2"
-            type="radio"
-            name="s_view"
-            value="Spymaster"
-          />Spymaster</label
-        >
-      </form> -->
     </div>
 
     <script src="https://unpkg.com/jquery"></script>
@@ -210,7 +174,5 @@
     <script src="cnUI.js"></script>
     <script src="cnLogic.js"></script>
     <script src="socket.js"></script>
-    <!-- <script src="https://unpkg.com/popper"></script>
-    <script src="https://unpkg.com/bootstrap"></script> -->
   </body>
 </html>

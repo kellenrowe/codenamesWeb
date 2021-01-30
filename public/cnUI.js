@@ -91,9 +91,6 @@ function hideLoadingView() {
   $("#score").show("slow");
   $("#timer").show("slow");
   timerBtn.show("slow");
-  $("#link")
-    .text(`Invite friends: ${BASE_LINK}`)
-    .show("slow");
   $("#linkRule").show("slow");
 }
 
