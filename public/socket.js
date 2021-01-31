@@ -49,8 +49,6 @@ socket.on("turnViewSelectOff", function () {
 
 socket.on("timerBtnClicked", function () {
   handleTimer();
-  // switchCurrentTeam();
-  // displayTeamTurn();
 });
 
 socket.on('flipCard', function(data) {

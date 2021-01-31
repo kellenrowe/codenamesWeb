@@ -28,12 +28,10 @@ function hidePageComponents() {
  *  recieved from server after click
  */
 function handleClasses(cardInfo) {
-  // $("#title").removeClass("typewriter");
   let card = cardInfo.card;
   let color = cardInfo.color;
   $(`#${card}`).addClass(`${color}`);
   $(`#${card}`).removeClass(`flip`);
-
 }
 
 
@@ -45,7 +43,6 @@ function switchCurrentTeam() {
     ? (gameState.currentTeam = "Red-Team")
     : (gameState.currentTeam = "Blue-Team");
 
-  // clearInterval(intervalId);
   socket.emit("switchCurrentTeam", gameState);
 }
 
