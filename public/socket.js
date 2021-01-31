@@ -38,9 +38,9 @@ socket.on("updateAfterGameBoardClick", function (data) {
   displayTeamTurn();
 });
 
-
-timerBtn.on("click", function () {
-  socket.emit("timerBtnClicked");
+socket.on("switchCurrentTeam", function (data) {
+  gameState = { ... data }
+  displayTeamTurn();
 });
 
 socket.on("turnViewSelectOff", function () {
@@ -49,7 +49,8 @@ socket.on("turnViewSelectOff", function () {
 
 socket.on("timerBtnClicked", function () {
   handleTimer();
-  displayTeamTurn();
+  // switchCurrentTeam();
+  // displayTeamTurn();
 });
 
 socket.on('flipCard', function(data) {

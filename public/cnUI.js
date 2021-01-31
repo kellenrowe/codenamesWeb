@@ -45,8 +45,8 @@ function switchCurrentTeam() {
     ? (gameState.currentTeam = "Red-Team")
     : (gameState.currentTeam = "Blue-Team");
 
-  clearInterval(intervalId);
-  socket.emit("updateAfterGameBoardClick", gameState);
+  // clearInterval(intervalId);
+  socket.emit("switchCurrentTeam", gameState);
 }
 
 

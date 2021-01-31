@@ -35,6 +35,10 @@ io.on("connection", function (socket) {
   socket.on("updateAfterGameBoardClick", function (data) {
     io.sockets.emit("updateAfterGameBoardClick", data);
   });
+  
+  socket.on("switchCurrentTeam", function (data) {
+    io.sockets.emit("switchCurrentTeam", data);
+  });
 
   socket.on("turnViewSelectOff", function () {
     io.sockets.emit("turnViewSelectOff");

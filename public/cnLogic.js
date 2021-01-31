@@ -32,6 +32,7 @@ let gameState = {
 /** creates and starts turn / timer */
 function startTimer() {
   console.debug("startTimer");
+  console.log('timer should start');
 
   let time = TURN_LENGTH,
     minutes,
@@ -56,7 +57,6 @@ function startTimer() {
 /** on click: controls timer reset, and signifier */
 function handleTimer() {
   console.debug("handleTimer");
-
   if (!timer) {
     intervalId = startTimer();
     timer = true;
@@ -64,7 +64,7 @@ function handleTimer() {
   } else {
     clearInterval(intervalId);
     timer = false;
-    switchCurrentTeam();
+    // switchCurrentTeam();
     timerBtn.text("Start Turn");
   }
 }
@@ -185,6 +185,7 @@ function handleClicks(evt) {
       socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-red" });
       gameState.scoreboard.redScore++;
       socket.emit("timerBtnClicked");
+      switchCurrentTeam();
     } else if (($(evt.target).hasClass("blue"))
       && ($(evt.target).hasClass("canFlip"))) {
       socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-blue" });
@@ -204,6 +205,7 @@ function handleClicks(evt) {
       socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-blue" });
       gameState.scoreboard.blueScore++;
       socket.emit("timerBtnClicked");
+      switchCurrentTeam();
     }
     if (gameState.scoreboard.blueScore === 9
       || gameState.scoreboard.redScore === 8) {
@@ -213,10 +215,12 @@ function handleClicks(evt) {
   if ($(evt.target).hasClass("grey")) {
     socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-grey" });
     socket.emit("timerBtnClicked");
+    switchCurrentTeam();
   }
   if ($(evt.target).hasClass("black")) {
     socket.emit("flipCard", { card: `${evt.target.id}`, color: "turn-black" });
     socket.emit("timerBtnClicked");
+    switchCurrentTeam();
     socket.emit("endGame");
     return
   }
@@ -347,6 +351,10 @@ loadGameBtn.on("submit", startGame);
 autoGenBtn.on("click", startAutoGenGame);
 gameBoard.on("click", ".cells", handleClicks);
 selectView.on("click", makeViewForSpymaster);
+timerBtn.on("click", function () {
+  console.log('clicked');
+  socket.emit("timerBtnClicked");
+});
 // restartBtn.on("click", makeNewGame); ******* socket.js
 // timerBtn.on("click", handleTimer); ******* socket.js
 
