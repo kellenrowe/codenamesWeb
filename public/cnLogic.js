@@ -310,7 +310,6 @@ function autoGameBoard() {
   
   wordsArray = shuffle(primaryWordsList);
   wordsArray.splice(HEIGHT * WIDTH);
-  // make sure all words are lowercased
   wordsArray = changeCase(wordsArray);
   
   makesCells();
@@ -355,8 +354,6 @@ timerBtn.on("click", function () {
   console.log('clicked');
   socket.emit("timerBtnClicked");
 });
-// restartBtn.on("click", makeNewGame); ******* socket.js
-// timerBtn.on("click", handleTimer); ******* socket.js
 
 
 const primaryWordsList = [

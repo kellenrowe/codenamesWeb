@@ -1,11 +1,5 @@
 "use strict";
-
-// const PORT = 'codenames.kellen-rowe.com';
-
-// const PORT = "https://localhost:8000";
 const PORT = "https://my-codenames.herokuapp.com/";
-
-// const socket = io.connect(`http://${PORT}`);
 
 let socket = io();
 
@@ -17,7 +11,6 @@ loadInitialData();
 socket.on('requestData', function () {
   socket.emit('syncInitialData', gameState);
 });
-
     
 socket.on("startGame", function (data) {
   gameState = { ...data };

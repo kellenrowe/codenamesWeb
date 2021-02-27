@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Codenames</title>
+    <title>Covidnames</title>
 
     <!-- favicon -->
     <link rel="icon" type="image/png" href="/Untitled-4.png" />
@@ -17,14 +17,6 @@
       href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
       rel="stylesheet"
     />
-
-    <!-- instructions font -->
-    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Overpass:wght@0,900;1,200
-      display=swap"
-      rel="stylesheet"
-    /> -->
 
     <!-- link to font awesome library -->
     <link
@@ -44,11 +36,9 @@
   <body>
     <div class="col-11 col-lg-9 col-xl-8 mx-auto">
       <div class="text-center mt-5 mb-4">
-        <h1 id="title" class="typewriter">Codenames</h1>
+        <h1 id="title" class="typewriter">Covidnames</h1>
       </div>
-
       <hr class="mt-5" id="formTopRule" />
-
       <form action="" class="mb-5" id="words-form">
         <div class="row">
           <div class="col-12 col-sm-8 col-md-5 mt-5 mb-2 text-center">
@@ -64,7 +54,6 @@
             </p>
           </div>
         </div>
-
         <div class="input-group row mx-auto">
           <input
             class="form-control col-2 py-2"
@@ -85,7 +74,6 @@
             placeholder="Topic 3"
           />
         </div>
-
         <div>
           <div class="col-6 input-group mt-4 mb-5 mx-auto">
             <button
@@ -98,14 +86,11 @@
           </div>
         </div>
       </form>
-
       <h3 class="currentTeam text-center my-3"></h3>
       <h4 class="text-center" style="display: none">Loading...</h4>
-
       <div class="loadingWheel text-center hidden">
         <i class="fas fa-spinner fa-spin fa-10x mt-5"></i>
       </div>
-
       <div class="col-11 col-lg-9 col-xl-8 mx-auto gameInfo">
         <button
           style="display: none"
@@ -116,9 +101,7 @@
         </button>
         <span class="ml-auto hidden" id="timer">02:00</span>
       </div>
-
       <hr class="col-11 col-lg-9 col-xl-8 hidden" id="linkRule" />
-
       <div
         id="score"
         class="col-11 col-lg-9 col-xl-8 mx-auto mb-3 mt-4 gameInfo"
@@ -134,7 +117,6 @@
           >Start Turn</span
         >
       </div>
-
       <div class="gameBoard">
         <div class="row row0">
           <!-- col divs to be made and filled in js -->
@@ -155,7 +137,6 @@
           <h1 class="typewriter align-middle"></h1>
         </div>
       </div>
-
       <div class="text-center mt-5">
         <button
           class="btn btn-primary pageBtns"
@@ -167,7 +148,6 @@
         </button>
       </div>
     </div>
-
     <script src="https://unpkg.com/jquery"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://unpkg.com/lodash"></script>
